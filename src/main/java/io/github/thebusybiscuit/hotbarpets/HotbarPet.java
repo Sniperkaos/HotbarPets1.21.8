@@ -4,14 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import dev.cworldstar.FormatUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.libraries.commons.lang.math.RandomUtils;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound.Source;
 
 public class HotbarPet extends SlimefunItem {
 
@@ -24,9 +27,27 @@ public class HotbarPet extends SlimefunItem {
         super(itemGroup, item, RecipeType.ENHANCED_CRAFTING_TABLE, recipe);
         this.food = food;
     }
+    
+    public HotbarPet(ItemGroup itemGroup, SlimefunItemStack item, ItemStack food, RecipeType recipeType, ItemStack[] recipe) {
+        super(itemGroup, item, recipeType, recipe);
+        this.food = food;
+    }
 
     public ItemStack getFavouriteFood() {
         return this.food;
+    }
+    
+    protected boolean canSendMessage(Player player) {
+    	long msgDelay = messageDelay.getOrDefault(player.getUniqueId(), 0L);
+    	if(msgDelay <= System.currentTimeMillis()) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    protected void sendMessage(Player player, String message) {
+        player.sendMessage(FormatUtils.convert(message));
+        messageDelay.put(player.getUniqueId(), System.currentTimeMillis() + MESSAGE_DELAY);
     }
 
     /**
@@ -39,18 +60,21 @@ public class HotbarPet extends SlimefunItem {
      * 
      * @return If the food consumption was successful
      */
-    public boolean checkAndConsumeFood(Player player) {
+    public boolean checkAndConsumeFood(Player player, boolean sendMessage) {
         if (!player.getInventory().containsAtLeast(getFavouriteFood(), 1)) {
-            if (messageDelay.getOrDefault(player.getUniqueId(), 0L) <= System.currentTimeMillis()) {
-                player.sendMessage(ChatColor.BLUE + "Your " + getItemName() + "would have helped you if you did not neglect it by not feeding it :(");
-                messageDelay.put(player.getUniqueId(), System.currentTimeMillis() + MESSAGE_DELAY);
+            if (canSendMessage(player) && sendMessage) {
+            	sendMessage(player, "<blue>Your " + getItemName() + " would have helped you, but it was not fed.");
             }
-
             return false;
         }
 
+    	player.playSound(net.kyori.adventure.sound.Sound.sound(Key.key("minecraft:entity.generic.eat"), Source.AMBIENT, 0.5f, RandomUtils.nextFloat()));
         player.getInventory().removeItem(getFavouriteFood());
         return true;
+    }
+    
+    public boolean checkAndConsumeFood(Player player) {
+    	return checkAndConsumeFood(player, true);
     }
 
     public static Map<UUID, Long> getMessageDelay() {

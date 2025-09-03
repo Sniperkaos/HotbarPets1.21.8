@@ -1,6 +1,5 @@
 package io.github.thebusybiscuit.hotbarpets.listeners;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -10,6 +9,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import dev.cworldstar.FormatUtils;
 import io.github.thebusybiscuit.hotbarpets.HotbarPet;
 import io.github.thebusybiscuit.hotbarpets.HotbarPets;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
@@ -38,7 +38,7 @@ public class FoodListener implements Listener {
             if (pig != null && SlimefunUtils.isItemSimilar(item, pig.getItem(), true)) {
 
                 if (!p.getInventory().containsAtLeast(pig.getFavouriteFood(), 1)) {
-                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&9Your &5Pig Pet &9would have helped you if you did not neglect it by not feeding it :("));
+                    p.sendMessage(FormatUtils.formatAndCast("&9Your &5Pig Pet &9would have helped you if you did not neglect it by not feeding it :("));
                     return;
                 }
 

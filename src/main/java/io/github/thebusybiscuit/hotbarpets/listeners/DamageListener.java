@@ -2,7 +2,6 @@ package io.github.thebusybiscuit.hotbarpets.listeners;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,6 +10,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import dev.cworldstar.FormatUtils;
 import io.github.thebusybiscuit.hotbarpets.HotbarPet;
 import io.github.thebusybiscuit.hotbarpets.HotbarPets;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
@@ -61,7 +61,7 @@ public class DamageListener implements Listener {
                 case LAVA:
                     if (magmacube != null && SlimefunUtils.isItemSimilar(item, magmacube.getItem(), true)) {
                         if (!p.getInventory().containsAtLeast(magmacube.getFavouriteFood(), 1)) {
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&9Your &4Magma Cube Pet &9would have helped you if you did not neglect it by not feeding it :("));
+                            p.sendMessage(FormatUtils.formatAndCast("&9Your &4Magma Cube Pet &9would have helped you if you did not neglect it by not feeding it :("));
                             return;
                         }
 
