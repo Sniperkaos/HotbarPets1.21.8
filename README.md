@@ -9,23 +9,20 @@ But only if you also carry their favourite food with you.
 
 [Read more...](https://github.com/TheBusyBiscuit/Slimefun4/wiki/HotbarPets)
 
-## Download HotbarPets
-You can download HotbarPets right here: [Development Builds](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/HotbarPets/master/)
+## Download
+You can download the updated version in the releases tab.
 
-<p align="center">
-  <a href="https://thebusybiscuit.github.io/builds/TheBusyBiscuit/HotbarPets/master/">
-    <img src="https://thebusybiscuit.github.io/builds/TheBusyBiscuit/HotbarPets/master/badge.svg" alt="Build Server"/>
-  </a>
-</p>
+## Fork
+This is a fork of the original HotbarPets addon. (original: [HotbarPets](https://github.com/Slimefun-Addon-Community/HotbarPets))
+As such, I am only maintaining and not updating this addon. (lie, I added a few more pets to this one.)
 
-## Discord
-You can find Slimefun's community on Discord!
-Click the badge down below to join the server for suggestions/questions or other discussions about this plugin.
-<p align="center">
-  <a href="https://discord.gg/fsD4Bkh">
-    <img src="https://img.shields.io/discord/565557184348422174?color=7289DA&label=Discord&style=for-the-badge" alt="Discord Invite"/>
-  </a>
-</p>
+## Optional Dependencies
+If ProtocolLib is installed, this updated version will display the time remaining until a TimedPet's next feed
+and whether or not the TimedPet is active.
+
+## Issues
+If you encounter any issues, open an issue. There's no guarantee I'll do it,
+but at least I'll know about it.
 
 ## Open Source
 This Project is open-source and licensed under the [MIT License](https://github.com/TheBusyBiscuit/HotbarPets/blob/master/LICENSE)
