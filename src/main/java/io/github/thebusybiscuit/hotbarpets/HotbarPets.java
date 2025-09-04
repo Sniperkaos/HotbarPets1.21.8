@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import dev.cworldstar.ANOSFIntegration;
 import dev.cworldstar.MoreHotbarPets;
 import dev.cworldstar.PluginIntegrations;
+import dev.cworldstar.ProtocolLibIntegration;
 import io.github.thebusybiscuit.hotbarpets.groups.BossMobs;
 import io.github.thebusybiscuit.hotbarpets.groups.FarmAnimals;
 import io.github.thebusybiscuit.hotbarpets.groups.HostileMobs;
@@ -61,6 +62,9 @@ public class HotbarPets extends JavaPlugin implements Listener, SlimefunAddon {
         	);
     	}
     	
+    	if(PluginIntegrations.isProtocolLibActive()) {
+    		ProtocolLibIntegration.setup(this);
+    	}
 
 
         // Add all the Pets via their Group class

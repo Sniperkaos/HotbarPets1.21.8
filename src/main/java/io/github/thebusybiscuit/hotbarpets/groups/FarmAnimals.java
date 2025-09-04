@@ -1,8 +1,10 @@
 package io.github.thebusybiscuit.hotbarpets.groups;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 
+import dev.cworldstar.hotbarpets.impl.TimedFeedingPet;
 import io.github.thebusybiscuit.hotbarpets.HotbarPet;
 import io.github.thebusybiscuit.hotbarpets.HotbarPets;
 import io.github.thebusybiscuit.hotbarpets.PetGroup;
@@ -33,16 +35,22 @@ public final class FarmAnimals implements PetGroup {
                 new ItemStack(Material.REDSTONE), SlimefunItems.GOLD_16K.asOne(), new ItemStack(Material.REDSTONE)
         }).register(plugin);
 
-        new HotbarPet(plugin.getItemGroup(), new SlimefunItemStack("HOTBAR_PET_CHICKEN", PetTexture.CHICKEN_PET.getHash(), "&fChicken Pet", getName(), "&7Favourite Food: Seeds", "", "&fGives you Eggs over time..."), new ItemStack(Material.WHEAT_SEEDS), new ItemStack[] {
+        new TimedFeedingPet(plugin.getItemGroup(), new SlimefunItemStack("HOTBAR_PET_CHICKEN", PetTexture.CHICKEN_PET.getHash(), "&fChicken Pet", getName(), "&7Favourite Food: Seeds", "", "&fGives you Eggs over time..."), new ItemStack(Material.WHEAT_SEEDS), new ItemStack[] {
                 new ItemStack(Material.REDSTONE), new ItemStack(Material.FEATHER), new ItemStack(Material.REDSTONE),
                 new ItemStack(Material.COOKED_CHICKEN), new ItemStack(Material.DIAMOND), new ItemStack(Material.COOKED_CHICKEN),
                 new ItemStack(Material.REDSTONE), SlimefunItems.GOLD_16K.asOne(), new ItemStack(Material.REDSTONE)
+        }, p -> {
+            p.getInventory().addItem(new ItemStack(Material.EGG));
+            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1.0F, 2.0F);
         }).register(plugin);
 
-        new HotbarPet(plugin.getItemGroup(), new SlimefunItemStack("HOTBAR_PET_MOOSHROOM", PetTexture.MOOSHROOM_PET.getHash(), "&dMooshroom Pet", getName(), "&7Favourite Food: Red Mushrooms", "", "&fGives you Mushroom Stew over time..."), new ItemStack(Material.RED_MUSHROOM), new ItemStack[] {
+        new TimedFeedingPet(plugin.getItemGroup(), new SlimefunItemStack("HOTBAR_PET_MOOSHROOM", PetTexture.MOOSHROOM_PET.getHash(), "&dMooshroom Pet", getName(), "&7Favourite Food: Red Mushrooms", "", "&fGives you Mushroom Stew over time..."), new ItemStack(Material.RED_MUSHROOM), new ItemStack[] {
                 new ItemStack(Material.LAPIS_LAZULI), new ItemStack(Material.COOKED_BEEF), new ItemStack(Material.LAPIS_LAZULI),
                 new ItemStack(Material.RED_MUSHROOM), new ItemStack(Material.DIAMOND), new ItemStack(Material.BROWN_MUSHROOM),
                 new ItemStack(Material.LAPIS_LAZULI), SlimefunItems.GOLD_16K.asOne(), new ItemStack(Material.LAPIS_LAZULI)
+        }, p -> {
+            p.getInventory().addItem(new ItemStack(Material.MUSHROOM_STEW));
+            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_COW_AMBIENT, 1.0F, 2.0F);
         }).register(plugin);
 
         new CowPet(plugin.getItemGroup(), cow, new ItemStack(Material.WHEAT), new ItemStack[] {
@@ -51,10 +59,13 @@ public final class FarmAnimals implements PetGroup {
                 new ItemStack(Material.COAL), SlimefunItems.GOLD_16K.asOne(), new ItemStack(Material.COAL)
         }).register(plugin);
 
-        new HotbarPet(plugin.getItemGroup(), new SlimefunItemStack("HOTBAR_PET_GOLDEN_COW", PetTexture.GOLDEN_COW_PET.getHash(), "&6Golden Cow Pet", getName(), "&7Favourite Food: Golden Carrots", "", "&fGives you Golden Ingots over time...", "&f(That means you have a net gain of 1 golden nugget)"), new ItemStack(Material.GOLDEN_CARROT), new ItemStack[] {
+        new TimedFeedingPet(plugin.getItemGroup(), new SlimefunItemStack("HOTBAR_PET_GOLDEN_COW", PetTexture.GOLDEN_COW_PET.getHash(), "&6Golden Cow Pet", getName(), "&7Favourite Food: Golden Carrots", "", "&fGives you Golden Ingots over time...", "&f(That means you have a net gain of 1 golden nugget)"), new ItemStack(Material.GOLDEN_CARROT), new ItemStack[] {
                 new ItemStack(Material.GOLDEN_CARROT), new ItemStack(Material.GOLD_NUGGET), new ItemStack(Material.GOLDEN_CARROT),
                 new ItemStack(Material.GOLD_NUGGET), cow.asOne(), new ItemStack(Material.GOLD_NUGGET),
                 new ItemStack(Material.GOLDEN_CARROT), new ItemStack(Material.GOLD_NUGGET), new ItemStack(Material.GOLDEN_CARROT)
+        }, p -> {
+            p.getInventory().addItem(new ItemStack(Material.GOLD_INGOT));
+            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_COW_AMBIENT, 0.8F, 2.0F);
         }).register(plugin);
         // @formatter:on
     }

@@ -2,12 +2,10 @@ package dev.cworldstar.hotbarpets.pets;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.bukkit.Material;
-import org.bukkit.enchantments.EnchantmentOffer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MenuType;
 import org.bukkit.inventory.view.EnchantmentView;

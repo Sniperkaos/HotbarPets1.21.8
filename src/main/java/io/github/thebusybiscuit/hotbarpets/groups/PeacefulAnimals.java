@@ -2,8 +2,10 @@ package io.github.thebusybiscuit.hotbarpets.groups;
 
 import io.github.thebusybiscuit.hotbarpets.PetTexture;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 
+import dev.cworldstar.hotbarpets.impl.TimedFeedingPet;
 import io.github.thebusybiscuit.hotbarpets.HotbarPet;
 import io.github.thebusybiscuit.hotbarpets.HotbarPets;
 import io.github.thebusybiscuit.hotbarpets.PetGroup;
@@ -27,10 +29,13 @@ public final class PeacefulAnimals implements PetGroup {
     @Override
     public void load(HotbarPets plugin) {
         // @formatter:off
-        new HotbarPet(plugin.getItemGroup(), new SlimefunItemStack("HOTBAR_PET_FISH", PetTexture.FISH_PET.getHash(), "&3Fish Pet", getName(), "&7Favourite Food: Seeds", "", "&fGives you Fish over time..."), new ItemStack(Material.WHEAT_SEEDS), new ItemStack[] {
+        new TimedFeedingPet(plugin.getItemGroup(), new SlimefunItemStack("HOTBAR_PET_FISH", PetTexture.FISH_PET.getHash(), "&3Fish Pet", getName(), "&7Favourite Food: Seeds", "", "&fGives you Fish over time..."), new ItemStack(Material.WHEAT_SEEDS), new ItemStack[] {
                 new ItemStack(Material.IRON_INGOT), new ItemStack(Material.COD), new ItemStack(Material.IRON_INGOT),
                 new ItemStack(Material.COD), new ItemStack(Material.DIAMOND), new ItemStack(Material.COD),
                 new ItemStack(Material.WATER_BUCKET), SlimefunItems.GOLD_18K.asOne(), new ItemStack(Material.WATER_BUCKET)
+        }, p -> {
+            p.getInventory().addItem(new ItemStack(Material.COOKED_COD));
+            p.getWorld().playSound(p.getLocation(), Sound.BLOCK_WATER_AMBIENT, 1.0F, 2.0F);
         }).register(plugin);
 
         new SquidPet(plugin.getItemGroup(), new SlimefunItemStack("HOTBAR_PET_SQUID", PetTexture.SQUID_PET.getHash(), "&bSquid Pet", getName(), "&7Favourite Food: Raw Cod", "", "&fRight-Click: &7Gives you Water Breathing"), new ItemStack(Material.COD), new ItemStack[] {

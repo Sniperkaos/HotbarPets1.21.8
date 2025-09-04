@@ -1,16 +1,13 @@
 package dev.cworldstar;
 
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
-import java.util.logging.Level;
-
 import org.apache.commons.lang3.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.profile.PlayerTextures;
-
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
 
@@ -37,12 +34,9 @@ public class SkullCreator {
 		return item;
 	}
 	
-	public static ItemStack loadPlayerHead(ItemStack item, String uuid) {
+	public static ItemStack loadPlayerHead(ItemStack item, UUID uuid) {
 		Validate.isInstanceOf(SkullMeta.class, item.getItemMeta(), "#loadPlayerHead(item, texture) passed an item without SkullMeta.");
-		UUID ownerUUID = UUID.fromString(uuid);
-		Bukkit.getLogger().log(Level.INFO, "UUID: " + uuid);
-		OfflinePlayer player = Bukkit.getOfflinePlayer(ownerUUID);
-		Bukkit.getLogger().log(Level.INFO, "OfflinePlayer: " + player.toString());
+		OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
 		PlayerProfile profile = player.getPlayerProfile();
 		profile.complete();
 		
@@ -50,5 +44,13 @@ public class SkullCreator {
 			meta.setPlayerProfile(profile);
 		});
 		return item;
+	}
+	
+	public static ItemStack loadPlayerHead(ItemStack item, String uuid) {
+		return loadPlayerHead(item, UUID.fromString(uuid));
+	}
+
+	public static ItemStack skullFromHash(String hash) {
+		return loadPlayerHead(new ItemStack(Material.PLAYER_HEAD), UUID.nameUUIDFromBytes(hash.getBytes(StandardCharsets.UTF_8)));
 	}
 }

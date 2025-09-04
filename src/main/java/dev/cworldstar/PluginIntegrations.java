@@ -12,4 +12,8 @@ public class PluginIntegrations {
 		return Bukkit.getServer().getPluginManager().isPluginEnabled("BreweryX");
 	}
 
+	public static boolean isProtocolLibActive() {
+		return Bukkit.getServer().getPluginManager().isPluginEnabled("ProtocolLib");
+	}
+
 }

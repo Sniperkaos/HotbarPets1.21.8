@@ -1,8 +1,8 @@
 package io.github.thebusybiscuit.hotbarpets;
 
-import io.github.thebusybiscuit.slimefun4.libraries.dough.skins.PlayerHead;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.skins.PlayerSkin;
 import org.bukkit.inventory.ItemStack;
+
+import dev.cworldstar.SkullCreator;
 
 import javax.annotation.Nonnull;
 
@@ -76,6 +76,6 @@ public enum PetTexture {
 
     @Nonnull
     public ItemStack getAsItem() {
-        return PlayerHead.getItemStack(PlayerSkin.fromHashCode(getHash()));
+        return SkullCreator.skullFromHash(getHash());
     }
 }

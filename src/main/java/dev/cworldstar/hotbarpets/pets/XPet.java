@@ -41,7 +41,7 @@ public class XPet extends HotbarPet implements TimedFeeder, PetActivatedMarker, 
 			"",
 			"<gray>Favorite Food: <gradient:#F28E1C:#FE8C12:#F78F1E>Skunky Beer (1 Star)",
 			"",
-			"<gray>- <white>Burps when poked.",
+			"<gray>- <yellow>Burps when poked.",
 			"<gray>- Will additionally act as a totem of undying,",
 			"<gray> but only while fed.",
 			"",
@@ -62,11 +62,11 @@ public class XPet extends HotbarPet implements TimedFeeder, PetActivatedMarker, 
 			@Override
 			public void onRightClick(PlayerRightClickEvent e) {
 				Player p = e.getPlayer();
-				if(activated(e.getPlayer())) {
+				if(activated(XPet.this, e.getPlayer())) {
 					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_BURP, 1.0f, 1.0f);
 					BreweryApi.setPlayerDrunk(p, 5, 10);
 				} else {
-					p.sendMessage(FormatUtils.mm("<gray>Your xmprix pet is hungry."));
+					p.sendMessage(FormatUtils.mm("<gray>Your xmprix pet is hungry. Remaining delay: <aqua>" + String.valueOf(delay(XPet.this, p))));
 				}
 			};
 		});
@@ -74,16 +74,12 @@ public class XPet extends HotbarPet implements TimedFeeder, PetActivatedMarker, 
 
 	@Override
 	public int getFeedDelay() {
-		return 5000;
+		return 180;
 	}
 	
 	@Override
 	public void run(Player player) {
-		if(feed(this, player) && isFeedTime(player)) {
-			activate(player);
-		} else {
-			deactivate(player);
-		}
+		tick(this, player);
 	}
 	
 	@EventHandler
@@ -92,8 +88,7 @@ public class XPet extends HotbarPet implements TimedFeeder, PetActivatedMarker, 
 		if(!(damaged instanceof Player)) return;
 		if(e.isCancelled()) return;
 		Player hurt = (Player) damaged;
-		if(!active(hurt)) {
-			Bukkit.getLogger().log(Level.INFO, "player took damage but the pet was inactive");
+		if(!active(this, hurt)) {
 			return;
 		}
 		if((hurt.getHealth() - e.getDamage()) <= 0) {
@@ -109,7 +104,7 @@ public class XPet extends HotbarPet implements TimedFeeder, PetActivatedMarker, 
 			hurt.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 4000, 4));
 			hurt.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 4000, 2));
 			
-			deactivate(hurt);
+			deactivate(this, hurt);
 		}
 	}
 

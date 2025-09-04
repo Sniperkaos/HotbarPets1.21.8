@@ -11,13 +11,12 @@ import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.inventory.ItemStack;
 
 import dev.cworldstar.builders.PlayerHeadBuilder;
-import dev.cworldstar.hotbarpets.impl.SequencedPet;
 import dev.cworldstar.hotbarpets.impl.TimedFeeder;
 import io.github.thebusybiscuit.hotbarpets.HotbarPet;
 import io.github.thebusybiscuit.hotbarpets.HotbarPets;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 
-public class ExperiencePet extends HotbarPet implements Listener, SequencedPet, TimedFeeder {
+public class ExperiencePet extends HotbarPet implements Listener, TimedFeeder {
 
 	private static HashMap<UUID, Boolean> active = new HashMap<UUID, Boolean>();
 	
@@ -27,7 +26,7 @@ public class ExperiencePet extends HotbarPet implements Listener, SequencedPet, 
 			"",
 			"<gray>Favorite Food: <gradient:white:yellow>Experience Bottle",
 			"",
-			"<gray>- <white>While in your hotbar, increases your",
+			"<gray>- <white>While active in your hotbar, increases your",
 			"<white> <green>experience</green> gain by 50%."
 	}).item();
 	
@@ -44,11 +43,7 @@ public class ExperiencePet extends HotbarPet implements Listener, SequencedPet, 
 
 	@Override
 	public void run(Player player) {
-		if(tryFeed(this, player)) {
-			active.put(player.getUniqueId(), true);
-		} else {
-			active.remove(player.getUniqueId());
-		};
+		tick(this, player);
 	}
 	
 	@EventHandler
